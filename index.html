@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MiniMax H3 Turbo LoRA — 10-scenario comparison</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #111418; color: #e6e6e6;
+         font: 14px/1.5 system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 0; }
+  p.sub { color: #9aa4af; margin: 0 0 8px; max-width: 900px; }
+  a { color: #8fc1f0; }
+  .row { margin: 26px 0; padding: 14px; background: #1a1f26;
+          border: 1px solid #2a313a; border-radius: 10px; }
+  .rowhead { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: baseline;
+              margin-bottom: 10px; }
+  .rowctl { margin-left: auto; }
+  details { flex-basis: 100%; color: #9aa4af; }
+  details pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, monospace;
+                 background: #12161b; padding: 10px 12px; border-radius: 8px;
+                 max-width: 1100px; }
+  .cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 1100px) { .cells { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cells { grid-template-columns: 1fr; } }
+  video { width: 100%; display: block; background: #000; border-radius: 6px;
+           aspect-ratio: 960/544; }
+  .cellmeta { display: flex; justify-content: space-between; padding: 6px 2px 0; }
+  .time { color: #9aa4af; font-variant-numeric: tabular-nums; }
+  .miss { display: grid; place-items: center; color: #b3564a; border: 1px dashed #b3564a;
+           border-radius: 6px; }
+  button { background: #2a313a; color: #e6e6e6; border: 1px solid #3a434e;
+            border-radius: 6px; padding: 5px 12px; font: inherit; cursor: pointer;
+            margin-left: 6px; }
+  button:hover { background: #343d48; }
+  footer { color: #9aa4af; margin-top: 30px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<h1>MiniMax H3 Turbo LoRA — 10-scenario comparison</h1>
+<p class="sub">Base MiniMax H3 vs the <a href="https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora">Turbo LoRA</a>
+(<a href="https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI">ComfyUI conversions</a>) across 10 stress-test
+scenarios. 5.17&nbsp;s &middot; 960&times;544 &middot; 24&nbsp;fps &middot; native audio &middot; same seed and prompt
+per row (steps/LoRA change the trajectory, so takes differ &mdash; judge quality, not shot-for-shot identity).
+Rendered locally on an RTX&nbsp;5080 (16&nbsp;GB) with vanilla ComfyUI nodes; render time under each clip.
+LoRA runs: strength 1.0, video sigma shift 12, audio sigma shift 6, res_multistep/simple.</p>
+
+<section class="row" id="dialogue-closeup">
+  <div class="rowhead">
+    <h2>Dialogue close-up — lip-sync, skin, intimate voice</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('dialogue-closeup')">&#9654; play row</button>
+      <button onclick="rowMute('dialogue-closeup')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic close-up of an elderly Japanese fisherman in his seventies with a white stubbled beard, deep weathered wrinkles, and a faded yellow rain slicker, sitting on the edge of a wooden boat mending a green fishing net with both hands, golden late-afternoon light on his face, calm harbor water behind him. From 0.0 to 1.8 seconds he works the netting needle through the mesh with slow practiced movements. At the 2.0-second mark he looks up at the camera, his eyes crinkling into a warm smile, and (S1), in a gravelly, slow, deep voice, says: &lt;d&gt;[English] The sea gives you exactly what you ask of it.&lt;/d&gt; From 4.2 seconds he returns his gaze to the net and pulls a knot tight. The handheld camera holds nearly still with a gentle organic sway; his hands never stop moving.
+
+overall_soundscape:
+Quiet harbor ambience: small waves lapping against the hull, distant gull cries, the soft creak of the wooden boat, faint rope and net rustle under his hands. (S1)&#x27;s voice is close-mic&#x27;d, warm and intimate. A knot pulled tight makes a soft fibrous creak at 4.5 seconds.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/dialogue-closeup--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">165s</span></div>
+    </div><div class="cell">
+      <video src="videos/dialogue-closeup--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/dialogue-closeup--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/dialogue-closeup--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="skate-action">
+  <div class="rowhead">
+    <h2>Skate action — fast motion, whip pan, impact SFX</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('skate-action')">&#9654; play row</button>
+      <button onclick="rowMute('skate-action')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic action shot of a Latina teenage girl skateboarder with a long dark braid, in a red hoodie and black jeans at a concrete skatepark under bright midday sun. From 0.0 to 1.0 seconds she pushes hard twice and rolls fast toward a four-stair gap, wheels rumbling on rough concrete. At the 1.4-second mark she snaps an ollie off the top stair — the camera whip-pans right to track her airborne. At the 2.2-second mark she lands hard on both trucks with a loud clack, knees compressing, and rolls away at speed. From 2.5 to 4.2 seconds the camera tracks alongside her in a fast lateral truck as she carves left around a painted curve, hoodie and braid flapping. At the 4.5-second mark she stomps a tail-scrape stop, board screeching briefly, and turns her head toward the camera breathing hard. Her motion never stops; the camera never freezes.
+
+overall_soundscape:
+Aggressive skatepark audio: polyurethane wheels rumbling over rough concrete, two sharp push-off scuffs, the crack of the ollie pop at 1.4 seconds, wind rush during the airborne beat, a hard double-truck clack landing at 2.2 seconds, continuous rolling rumble, and a gritty tail-scrape screech at 4.5 seconds. Distant park ambience and one faraway shout of approval.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/skate-action--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">167s</span></div>
+    </div><div class="cell">
+      <video src="videos/skate-action--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/skate-action--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/skate-action--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">94s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="drummer">
+  <div class="rowhead">
+    <h2>Jazz drummer — beat-synced motion, rhythmic audio</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('drummer')">&#9654; play row</button>
+      <button onclick="rowMute('drummer')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic medium shot of a Black jazz drummer in his forties wearing a charcoal vest over a rolled-sleeve shirt, seated at a vintage brass-and-cream drum kit in a dim smoky jazz club, a single warm spotlight from above. From 0.0 to 2.0 seconds he plays soft circular brush sweeps on the snare with both hands, eyes closed, head nodding gently with the rhythm. At the 2.2-second mark he switches gears: opens his eyes, spins the right brush into a stick grip, and plays a quick accelerating fill across the rack tom and floor tom. At the 3.6-second mark he strikes a ride-cymbal bell accent, then at the 4.6-second mark he hits the crash cymbal and lets it ring, arms opening wide, a proud grin spreading. The camera pushes in slowly from medium to medium-close through the whole shot; his motion never stops.
+
+overall_soundscape:
+Live jazz-club audio in a small warm room: continuous soft brush sweeps on coated snare from 0 to 2.2 seconds, an accelerating tom fill from 2.2 to 3.5 seconds, a bright ride-bell ping at 3.6 seconds, a full crash-cymbal hit ringing out at 4.6 seconds with natural decay, faint glass clinks and low murmured crowd underneath.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/drummer--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">166s</span></div>
+    </div><div class="cell">
+      <video src="videos/drummer--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/drummer--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/drummer--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">94s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="drone-coast">
+  <div class="rowhead">
+    <h2>Drone coastline — orchestral score, landscape detail</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('drone-coast')">&#9654; play row</button>
+      <button onclick="rowMute('drone-coast')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic cinematic aerial drone shot flying forward along a rugged emerald coastline at golden hour. From 0.0 to 5.17 seconds the drone glides smoothly forward and slightly right at medium speed, revealing towering sea cliffs streaked with white guano, waves exploding into spray against black rocks far below, and a lighthouse with a white tower catching the low sun on a distant headland. At the 2.5-second mark a flock of white seabirds sweeps through the frame below the camera, their shadows crossing the cliff face. Sunlight flares gently across the lens at the 4.0-second mark. The ocean glitters with fine golden texture; the horizon stays level; the motion is one continuous unbroken glide.
+
+overall_soundscape:
+Distant and airy: low wind over the drone, the muffled rhythmic boom of waves striking the rocks far below, faint seabird cries passing at 2.5 seconds.
+
+non_diegetic_music:
+A sweeping cinematic orchestral score: warm strings swelling steadily from quiet to full, French horns entering at the 2.5-second mark, a gentle timpani roll under the final two seconds, hopeful and majestic in a major key.</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/drone-coast--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">166s</span></div>
+    </div><div class="cell">
+      <video src="videos/drone-coast--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/drone-coast--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/drone-coast--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="neon-rain-night">
+  <div class="rowhead">
+    <h2>Neon rain night — low light, reflections, color cast</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('neon-rain-night')">&#9654; play row</button>
+      <button onclick="rowMute('neon-rain-night')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic night scene in heavy rain: a young Black man in a mustard-yellow raincoat under a clear plastic umbrella crosses a narrow neon-lit street in a dense Asian city district. From 0.0 to 5.17 seconds he walks steadily from left to right through the frame, boots splashing through shallow puddles that mirror pink, cyan and orange neon signs. Rain streaks fall continuously through every light source. At the 1.8-second mark a taxi passes behind him, its headlights sweeping across the wet asphalt and throwing his long shadow forward. At the 3.5-second mark he tilts the umbrella back slightly and glances up at the glowing signs, rain drumming louder on the plastic. Steam rises from a street vent on the right. The camera tracks him laterally at walking pace, holding him in the left third; nothing in the scene ever freezes.
+
+overall_soundscape:
+Dense rain on asphalt and awnings, sharper drumming of rain on the plastic umbrella, his boots splashing in rhythm, the wet hiss of the passing taxi&#x27;s tires at 1.8 seconds with a brief engine note, a low electrical buzz from the neon signs, muffled city rumble underneath.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/neon-rain-night--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">165s</span></div>
+    </div><div class="cell">
+      <video src="videos/neon-rain-night--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/neon-rain-night--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/neon-rain-night--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="dog-shake">
+  <div class="rowhead">
+    <h2>Dog shake — fur, water droplets, high-frequency detail</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('dog-shake')">&#9654; play row</button>
+      <button onclick="rowMute('dog-shake')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic shot of a soaking-wet golden retriever climbing out of a calm lake onto a weathered wooden dock in bright morning light, pine trees blurred in the background. From 0.0 to 1.5 seconds the dog hauls itself up from the water, paws thudding on the planks, coat dark and dripping heavily. At the 1.8-second mark it plants all four legs, lowers its head, and begins a full-body shake: the wave of motion travels from nose to tail, ears flapping loudly, a spiraling halo of water droplets flying off backlit by the sun, individual drops sparkling. The shake lasts until the 3.2-second mark. From 3.5 seconds the dog sits, now fluffy and lighter-colored, tongue out, panting happily at the camera, tail thumping the dock twice. Static camera at dog height, close enough that stray droplets hit near the lens.
+
+overall_soundscape:
+Wet paws thudding and squelching on wood, water streaming off the coat, then the violent flutter-flap of ears and fur during the shake from 1.8 to 3.2 seconds with droplets spattering the planks around it, followed by relaxed open-mouth panting and two soft tail thumps on the dock. Gentle lake lapping and morning birdsong underneath.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/dog-shake--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">166s</span></div>
+    </div><div class="cell">
+      <video src="videos/dog-shake--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/dog-shake--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/dog-shake--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">94s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="two-speakers">
+  <div class="rowhead">
+    <h2>Two speakers — distinct voices in one clip</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('two-speakers')">&#9654; play row</button>
+      <button onclick="rowMute('two-speakers')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic two-shot across a chessboard in a wood-paneled study lit by a green banker&#x27;s lamp. On the left sits an older South Asian man with silver hair and a burgundy cardigan; on the right a young woman with a black bob and round glasses. From 0.0 to 1.2 seconds the man slides his queen forward decisively with two fingers, the piece clicking down on the board. At the 1.4-second mark he leans back with a satisfied smirk and (S1), in a deep, dry, amused male voice, says: &lt;d&gt;[English] Checkmate.&lt;/d&gt; At the 2.6-second mark the woman raises one eyebrow, picks up her knight, and places it down with a crisp click, and (S2), in a bright, quick, confident female voice, replies: &lt;d&gt;[English] Not this time, grandpa.&lt;/d&gt; At the 4.6-second mark the man&#x27;s smirk collapses into a stunned stare at the board. Static camera, both faces always visible, small natural movements throughout.
+
+overall_soundscape:
+Quiet study room tone: two distinct wooden clicks of chess pieces at 1.2 and 3.0 seconds, the leather chair creaking as the man leans back, a soft amused exhale from the woman before her line. Both voices close and clear, clearly distinct in timbre and position — (S1) slightly left, (S2) slightly right. A clock ticks steadily on the mantel.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/two-speakers--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">166s</span></div>
+    </div><div class="cell">
+      <video src="videos/two-speakers--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/two-speakers--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/two-speakers--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="text-sign">
+  <div class="rowhead">
+    <h2>Neon text sign — text legibility, flicker timing</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('text-sign')">&#9654; play row</button>
+      <button onclick="rowMute('text-sign')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic dusk exterior of a classic American roadside diner with chrome trim and big windows, parked cars silhouetted in a purple-blue twilight. From 0.0 to 5.17 seconds the camera pushes in slowly and smoothly toward the large neon sign mounted above the entrance. The sign reads &quot;ROSIE&#x27;S DINER&quot; in big red cursive neon letters, with &quot;OPEN 24 HRS&quot; in smaller blue block letters underneath. From 0.0 to 1.8 seconds the sign is dark and unlit against the dusk sky. At the 2.0-second mark the neon flickers twice with a stutter, then blazes fully on at the 2.6-second mark, bathing the wet parking lot in red and blue reflections. The letters stay perfectly legible and correctly spelled through the entire shot. At the 4.5-second mark a moth spirals into frame near the glowing tubes. Inside the windows, patrons and a waitress move softly out of focus.
+
+overall_soundscape:
+Quiet roadside dusk: crickets, a single car passing on the wet highway behind the camera, then two sharp electric buzz-clicks as the neon flickers at 2.0 seconds and a sustained warm electrical hum once the sign is fully lit, faint muffled diner clatter and a jukebox bleeding through the glass.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/text-sign--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">165s</span></div>
+    </div><div class="cell">
+      <video src="videos/text-sign--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">77s</span></div>
+    </div><div class="cell">
+      <video src="videos/text-sign--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">77s</span></div>
+    </div><div class="cell">
+      <video src="videos/text-sign--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="whisper-asmr">
+  <div class="rowhead">
+    <h2>Whisper ASMR — quiet noise floor, breath detail</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('whisper-asmr')">&#9654; play row</button>
+      <button onclick="rowMute('whisper-asmr')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic extreme close-up of a young East Asian librarian with dark hair in a loose bun and small gold earrings, lit by a single warm desk lamp in a vast dark library after hours, towering shelves vanishing into blackness behind her. From 0.0 to 1.5 seconds she slowly turns a page of an enormous leather-bound ledger, the paper arcing and settling with a dry rustle. At the 1.8-second mark she looks up just past the lens, raises one finger to her lips, and (S1), in a barely-audible intimate whisper, says: &lt;d&gt;[English] The archive closes at midnight... and not everything in here sleeps.&lt;/d&gt; From 4.3 seconds she slowly closes the ledger with a soft leathery thump and a faint puff of dust glittering in the lamplight. The camera is locked off; her movements are slow, deliberate, hypnotic.
+
+overall_soundscape:
+Extremely quiet ASMR-grade audio: near-silent library room tone, one slow dry page turn from 0.3 to 1.5 seconds, her close-mic&#x27;d whisper with soft breath detail, a distant grandfather clock ticking steadily throughout, the gentle leather thump of the ledger closing at 4.4 seconds. No other sounds; long stretches of near silence between events.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/whisper-asmr--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">165s</span></div>
+    </div><div class="cell">
+      <video src="videos/whisper-asmr--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">77s</span></div>
+    </div><div class="cell">
+      <video src="videos/whisper-asmr--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">77s</span></div>
+    </div><div class="cell">
+      <video src="videos/whisper-asmr--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section><section class="row" id="market-crowd">
+  <div class="rowhead">
+    <h2>Market crowd — scene complexity, layered soundscape</h2>
+    <div class="rowctl">
+      <button onclick="rowPlay('market-crowd')">&#9654; play row</button>
+      <button onclick="rowMute('market-crowd')">mute/unmute row</button>
+    </div>
+    <details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic bustling Moroccan souk in warm afternoon light filtering through slatted wooden roof covers, shafts of dusty sunlight cutting across the crowd. From 0.0 to 5.17 seconds the camera glides forward slowly at shoulder height through the narrow lane. In the foreground left, a vendor in a blue djellaba pours a stream of golden turmeric from a brass scoop into a burlap sack at the 1.0-second mark, dust catching the light. Shoppers cross the frame in both directions — a woman carrying a woven basket, two men in conversation, a boy weaving between them. At the 2.8-second mark a merchant on the right holds up a hammered copper lamp toward a customer, sunlight flashing off it. Hanging lanterns, pyramids of spices in reds and ochres, and stacked ceramics fill every background plane with detail. The crowd never stops moving.
+
+overall_soundscape:
+Dense layered market ambience: overlapping Arabic and French crowd chatter, the soft cascade of poured spice at 1.0 seconds, brass scales clinking, footsteps on stone, a distant reed flute melody drifting from deeper in the souk, fabric rustling as shoppers brush past, a merchant&#x27;s brief calling voice at 3.0 seconds.
+
+non_diegetic_music:
+N/A</pre></details>
+  </div>
+  <div class="cells">
+    <div class="cell">
+      <video src="videos/market-crowd--base20.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>baseline · 20 steps</b><span class="time">165s</span></div>
+    </div><div class="cell">
+      <video src="videos/market-crowd--ck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/market-crowd--emck8.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 8 steps</b><span class="time">78s</span></div>
+    </div><div class="cell">
+      <video src="videos/market-crowd--emck10.mp4" controls preload="none" loop></video>
+      <div class="cellmeta"><b>ema-ckpt500 · 10 steps</b><span class="time">93s</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>Turbo LoRA by <a href="https://huggingface.co/larryvrh">larryvrh</a> &middot;
+ComfyUI conversion by <a href="https://huggingface.co/drbaph">drbaph</a> &middot;
+base model MiniMax&nbsp;H3 (Comfy-Org pruned int8 checkpoint).</footer>
+
+<script>
+function rowPlay(id) {
+  document.querySelectorAll('#' + id + ' video').forEach(v => { v.currentTime = 0; v.play(); });
+}
+function rowMute(id) {
+  document.querySelectorAll('#' + id + ' video').forEach(v => v.muted = !v.muted);
+}
+</script>
+</body>
+</html>
