@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>H3 round 4 — A/B slider</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #111418; color: #e6e6e6;
+         font: 14px/1.55 system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  h2 { font-size: 16px; margin: 26px 0 8px; }
+  p.sub { color: #9aa4af; margin: 0 0 14px; max-width: 960px; }
+  a { color: #8fc1f0; }
+  code { background: #12161b; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+  nav.crumbs { margin-bottom: 14px; color: #6f7a85; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; }
+  .card { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px; overflow: hidden; }
+  .card.ref { border-color: #4a90d9; }
+  .card.pick { border-color: #4fa87a; }
+  video { width: 100%; display: block; background: #000; aspect-ratio: 960/544; }
+  .meta { padding: 9px 13px 11px; }
+  .meta b { font-size: 14.5px; }
+  .meta .note { color: #9aa4af; font-size: 12.5px; margin-top: 3px; }
+  .nums { font: 11.5px/1.6 ui-monospace, monospace; color: #7e8892; margin-top: 6px;
+          border-top: 1px solid #2a313a; padding-top: 5px; }
+  .controls { margin: 12px 0 18px; }
+  button, select { background: #2a313a; color: #e6e6e6; border: 1px solid #3a434e;
+           border-radius: 6px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  button:hover { background: #343d48; }
+  button.on { background: #1f3a55; border-color: #4a90d9; }
+  .controls button, .controls select { margin-right: 8px; }
+  details { color: #9aa4af; margin: 6px 0 14px; }
+  details pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, monospace;
+                background: #12161b; padding: 10px 12px; border-radius: 8px; max-width: 1000px; }
+  table { border-collapse: collapse; margin: 8px 0 22px; font-size: 13px; }
+  th, td { border: 1px solid #2a313a; padding: 4px 10px; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: #1a1f26; color: #b7c1cc; }
+  footer { color: #6f7a85; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
+           padding-top: 12px; }
+  ul.toc { list-style: none; padding: 0; display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
+  ul.toc li { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px;
+              overflow: hidden; }
+  ul.toc li.pending { opacity: .5; }
+  ul.toc img { width: 100%; display: block; aspect-ratio: 960/544; object-fit: cover; }
+  ul.toc .body { padding: 10px 13px 12px; }
+  ul.toc a { font-weight: 600; font-size: 14.5px; text-decoration: none; }
+  ul.toc .axis { color: #9aa4af; font-size: 12.5px; margin-top: 4px; }
+
+  .stage { position: relative; max-width: 960px; margin: 4px 0 10px;
+           border: 1px solid #2a313a; border-radius: 10px; overflow: hidden; background: #000;
+           cursor: ew-resize; touch-action: none; user-select: none; }
+  .stage video { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .stage .spacer { width: 100%; aspect-ratio: 960/544; }
+  #handle { position: absolute; top: 0; bottom: 0; width: 2px; background: #e6e6e6;
+            box-shadow: 0 0 8px rgba(0,0,0,.8); pointer-events: none; }
+  #handle::after { content: ''; position: absolute; top: 50%; left: 50%; width: 26px; height: 26px;
+            transform: translate(-50%,-50%); border-radius: 50%; background: #e6e6e6;
+            box-shadow: 0 0 8px rgba(0,0,0,.8); }
+  .badge { position: absolute; top: 8px; padding: 3px 9px; border-radius: 6px; font-size: 12px;
+           background: rgba(17,20,24,.82); border: 1px solid #3a434e; }
+  .badge.l { left: 8px; } .badge.r { right: 8px; }
+  .badge.hint { top: auto; bottom: 8px; left: 50%; transform: translateX(-50%);
+                color: #9aa4af; pointer-events: none; }
+  .bar { display: flex; align-items: center; gap: 10px; max-width: 960px; margin-bottom: 8px;
+         flex-wrap: wrap; }
+  .bar input[type=range] { flex: 1; min-width: 200px; }
+  .picks { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .mono { font: 12px ui-monospace, monospace; color: #9aa4af; min-width: 108px; }
+</style></head><body>
+<nav class="crumbs"><a href="index.html">&larr; all scenes</a></nav>
+<h1>A/B slider</h1>
+<p class="sub">Two configs overlaid on the same scene, in sync. <b>Drag anywhere on the video</b> to wipe between them (double-click to recentre), and switch which one you <b>hear</b> &mdash; only one side is audible at a time, so the voice comparison is direct. Keys: <code>space</code> play, <code>&larr;</code>/<code>&rarr;</code> wipe (hold shift for bigger steps), <code>a</code>/<code>b</code> audio side, <code>s</code> swap.</p>
+<div class="picks"><select id="scene"></select><span class="mono">left / A</span><select id="ca"></select><span class="mono">right / B</span><select id="cb"></select><button id="swap">&#8646; swap</button><a id="link" href="#"><button>all 12 &rarr;</button></a></div>
+<p class="sub" id="axis"></p>
+<div class="stage" id="stage"><div class="spacer"></div><video id="va" playsinline loop></video><div id="clip" style="position:absolute;inset:0"><video id="vb" playsinline loop></video></div><div id="handle"></div><span class="badge l">A</span><span class="badge r">B</span><span class="badge hint">drag to wipe &middot; <span id="pct">50%</span></span></div>
+<div class="bar"><button id="play">&#9654; Play</button><button id="restart">&#8635; Restart</button><input type="range" id="seek" min="0" max="100" value="0" step="0.1"><span class="mono" id="time">0.00 / 0.00 s</span></div>
+<div class="bar"><span class="mono">audio</span><button id="audioA">hear A</button><button id="audioB">hear B</button></div>
+<script>
+const DATA = {"scenes": [{"id": "singing-sustain", "title": "Sustained singing \u2014 pitch stability across a held note", "axis": "Melodic voice. Distillation is known to hurt the quietest and the most sustained vocal registers; a held note exposes pitch drift and warble that speech hides."}, {"id": "overlap-talk", "title": "Overlapping dialogue \u2014 two voices talking across each other", "axis": "Speaker separation under simultaneity. Yesterday's two-speakers scene alternated cleanly; this one deliberately collides the turns, which is where voice identity smears."}, {"id": "accent-code-switch", "title": "Accent and code-switch \u2014 Spanish into accented English mid-line", "axis": "Phoneme range beyond neutral English. Distillation tends to regress toward a generic accent; switching language mid-sentence makes that collapse audible."}, {"id": "offscreen-source", "title": "Off-screen sound source \u2014 audio with no visual anchor", "axis": "Audio that cannot be read off the pixels. Tests whether the audio branch invents a source or honours a described one it can never see."}, {"id": "silence-transient", "title": "Near-silence into a hard transient \u2014 dynamic range", "axis": "The quietest register plus a sharp peak in one clip. Yesterday every LoRA ran ~9 dB hot on whisper; this pairs that floor with a transient that must not clip."}, {"id": "rapid-cuts", "title": "Four hard cuts in five seconds \u2014 scene-change handling", "axis": "Editing inside a single generation. Tests whether hard cuts survive distillation, or smear into dissolves, and whether the audio bed cuts with the picture."}, {"id": "mirror-reflection", "title": "Mirror reflection \u2014 subject and reflection must agree", "axis": "Geometric self-consistency. A reflection doubles every error: the model has to keep two views of one face in agreement for the whole clip."}, {"id": "hands-dexterity", "title": "Hands close-up \u2014 ten fingers doing precise work", "axis": "The classic generative failure. Full-frame hands at 0.5 MP with fine bimanual coordination, plus synchronised micro-foley."}, {"id": "metronome-count", "title": "Metronome count \u2014 audio events on an exact grid", "axis": "Timing precision. Five evenly spaced beats give a measurable grid: any drift between the spoken count, the clap and the picture shows up as milliseconds."}, {"id": "polyphony-foreground", "title": "Dense polyphony with a foreground voice", "axis": "Many simultaneous sources with one that must stay intelligible. Yesterday's crowd scene was where the non-EMA noise bed collapsed hardest; this stacks more layers on top."}], "configs": [{"tag": "base20", "label": "baseline \u00b7 20 steps"}, {"tag": "emck8", "label": "ema-ckpt500 \u00b7 8 steps"}, {"tag": "ck8", "label": "ckpt500 (non-EMA) \u00b7 8 steps"}, {"tag": "lx4-ref", "label": "lightx2v \u00b7 4 steps \u00b7 str 1.0"}, {"tag": "lx4-house", "label": "lightx2v \u00b7 4 steps \u00b7 str 1.0 \u00b7 shift 12/6"}, {"tag": "lx4-ersde10", "label": "lightx2v \u00b7 4 steps \u00b7 str 1.0 \u00b7 er_sde"}, {"tag": "lx4-ref75", "label": "lightx2v \u00b7 4 steps \u00b7 str 0.75"}, {"tag": "lx4-75house", "label": "lightx2v \u00b7 4 steps \u00b7 str 0.75 \u00b7 shift 12/6"}, {"tag": "lx4-kijai", "label": "lightx2v \u00b7 4 steps \u00b7 str 0.75 \u00b7 er_sde"}, {"tag": "lx8-ref", "label": "lightx2v \u00b7 8 steps \u00b7 str 1.0"}, {"tag": "lx8-house", "label": "lightx2v \u00b7 8 steps \u00b7 str 1.0 \u00b7 shift 12/6"}, {"tag": "lx8-kijai", "label": "lightx2v \u00b7 8 steps \u00b7 str 0.75 \u00b7 er_sde"}]};
+const qs = new URLSearchParams(location.search);
+const $ = id => document.getElementById(id);
+let A = $('va'), B = $('vb');
+
+function fill(sel, opts, val) {
+  sel.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('');
+  if (val) sel.value = val;
+}
+fill($('scene'), DATA.scenes.map(s => [s.id, s.title]), qs.get('scene'));
+fill($('ca'), DATA.configs.map(c => [c.tag, c.label]), 'base20');
+fill($('cb'), DATA.configs.map(c => [c.tag, c.label]), 'lx4-kijai');
+
+function load() {
+  const s = $('scene').value;
+  A.src = `videos/r4/${s}--${$('ca').value}.mp4`;
+  B.src = `videos/r4/${s}--${$('cb').value}.mp4`;
+  A.poster = `posters/r4/${s}--${$('ca').value}.jpg`;
+  B.poster = `posters/r4/${s}--${$('cb').value}.jpg`;
+  $('axis').textContent = DATA.scenes.find(x => x.id === s).axis;
+  $('link').href = `scenes/${s}.html`;
+  A.load(); B.load();
+  A.currentTime = 0; B.currentTime = 0;
+  setAudio(audioSide);
+}
+['scene', 'ca', 'cb'].forEach(id => $(id).addEventListener('change', load));
+
+// --- wipe: dragged directly on the video ------------------------------------
+let wipePct = 50;
+function wipe(pct) {
+  wipePct = Math.max(0, Math.min(100, pct));
+  $('clip').style.clipPath = `inset(0 0 0 ${wipePct}%)`;
+  $('handle').style.left = wipePct + '%';
+  $('pct').textContent = Math.round(wipePct) + '%';
+}
+const stage = $('stage');
+function wipeFromEvent(e) {
+  const r = stage.getBoundingClientRect();
+  wipe(((e.clientX - r.left) / r.width) * 100);
+}
+let dragging = false;
+stage.addEventListener('pointerdown', e => {
+  dragging = true; stage.setPointerCapture(e.pointerId); wipeFromEvent(e); e.preventDefault();
+});
+stage.addEventListener('pointermove', e => { if (dragging) wipeFromEvent(e); });
+['pointerup', 'pointercancel'].forEach(t =>
+  stage.addEventListener(t, e => { dragging = false; stage.releasePointerCapture(e.pointerId); }));
+stage.addEventListener('dblclick', () => wipe(50));
+
+// --- transport: B follows A -------------------------------------------------
+function sync() { if (Math.abs(B.currentTime - A.currentTime) > 0.04) B.currentTime = A.currentTime; }
+A.addEventListener('timeupdate', () => {
+  sync();
+  $('seek').value = A.duration ? (A.currentTime / A.duration) * 100 : 0;
+  $('time').textContent = A.currentTime.toFixed(2) + ' / ' + (A.duration || 0).toFixed(2) + ' s';
+});
+$('play').addEventListener('click', () => {
+  if (A.paused) { sync(); A.play(); B.play(); $('play').textContent = '❚❚ Pause'; }
+  else { A.pause(); B.pause(); $('play').textContent = '▶ Play'; }
+});
+$('restart').addEventListener('click', () => {
+  A.currentTime = 0; B.currentTime = 0; A.play(); B.play(); $('play').textContent = '❚❚ Pause';
+});
+$('seek').addEventListener('input', e => {
+  if (!A.duration) return;
+  A.currentTime = (e.target.value / 100) * A.duration; sync();
+});
+A.addEventListener('ended', () => { $('play').textContent = '▶ Play'; });
+
+// --- audio: exactly one side audible ---------------------------------------
+let audioSide = 'A';
+function setAudio(side) {
+  audioSide = side;
+  A.muted = side !== 'A'; B.muted = side !== 'B';
+  $('audioA').classList.toggle('on', side === 'A');
+  $('audioB').classList.toggle('on', side === 'B');
+}
+$('audioA').addEventListener('click', () => setAudio('A'));
+$('audioB').addEventListener('click', () => setAudio('B'));
+$('swap').addEventListener('click', () => {
+  const a = $('ca').value; $('ca').value = $('cb').value; $('cb').value = a; load();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  if (e.code === 'Space') { e.preventDefault(); $('play').click(); }
+  if (e.key === 'a') setAudio('A');
+  if (e.key === 'b') setAudio('B');
+  if (e.key === 's') $('swap').click();
+  if (e.key === 'ArrowLeft') { e.preventDefault(); wipe(wipePct - (e.shiftKey ? 10 : 2)); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); wipe(wipePct + (e.shiftKey ? 10 : 2)); }
+});
+
+wipe(50); load(); setAudio('A');
+</script><footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
+Turbo LoRAs by <a href="https://huggingface.co/larryvrh">larryvrh</a> /
+<a href="https://huggingface.co/drbaph">drbaph</a> and
+<a href="https://huggingface.co/lightx2v/Minimax-h3-Turbo">lightx2v</a>
+(<a href="https://huggingface.co/Kijai/MiniMax-H3_comfy">Kijai's ComfyUI conversion</a>) &middot;
+rendered locally on an RTX&nbsp;5080 (16&nbsp;GB) with vanilla ComfyUI nodes.</footer>
+</body></html>

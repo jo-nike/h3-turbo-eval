@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>H3 round 4 — Hands close-up — ten fingers doing precise work</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #111418; color: #e6e6e6;
+         font: 14px/1.55 system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  h2 { font-size: 16px; margin: 26px 0 8px; }
+  p.sub { color: #9aa4af; margin: 0 0 14px; max-width: 960px; }
+  a { color: #8fc1f0; }
+  code { background: #12161b; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+  nav.crumbs { margin-bottom: 14px; color: #6f7a85; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; }
+  .card { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px; overflow: hidden; }
+  .card.ref { border-color: #4a90d9; }
+  .card.pick { border-color: #4fa87a; }
+  video { width: 100%; display: block; background: #000; aspect-ratio: 960/544; }
+  .meta { padding: 9px 13px 11px; }
+  .meta b { font-size: 14.5px; }
+  .meta .note { color: #9aa4af; font-size: 12.5px; margin-top: 3px; }
+  .nums { font: 11.5px/1.6 ui-monospace, monospace; color: #7e8892; margin-top: 6px;
+          border-top: 1px solid #2a313a; padding-top: 5px; }
+  .controls { margin: 12px 0 18px; }
+  button, select { background: #2a313a; color: #e6e6e6; border: 1px solid #3a434e;
+           border-radius: 6px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  button:hover { background: #343d48; }
+  button.on { background: #1f3a55; border-color: #4a90d9; }
+  .controls button, .controls select { margin-right: 8px; }
+  details { color: #9aa4af; margin: 6px 0 14px; }
+  details pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, monospace;
+                background: #12161b; padding: 10px 12px; border-radius: 8px; max-width: 1000px; }
+  table { border-collapse: collapse; margin: 8px 0 22px; font-size: 13px; }
+  th, td { border: 1px solid #2a313a; padding: 4px 10px; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: #1a1f26; color: #b7c1cc; }
+  footer { color: #6f7a85; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
+           padding-top: 12px; }
+  ul.toc { list-style: none; padding: 0; display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
+  ul.toc li { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px;
+              overflow: hidden; }
+  ul.toc li.pending { opacity: .5; }
+  ul.toc img { width: 100%; display: block; aspect-ratio: 960/544; object-fit: cover; }
+  ul.toc .body { padding: 10px 13px 12px; }
+  ul.toc a { font-weight: 600; font-size: 14.5px; text-decoration: none; }
+  ul.toc .axis { color: #9aa4af; font-size: 12.5px; margin-top: 4px; }
+</style></head><body>
+<nav class="crumbs"><a href="../index.html">&larr; all scenes</a> &middot; <a href="../ab.html">A/B slider tool</a></nav>
+<h1>Hands close-up — ten fingers doing precise work</h1>
+<p class="sub"><b>What this stresses:</b> The classic generative failure. Full-frame hands at 0.5 MP with fine bimanual coordination, plus synchronised micro-foley.<br>960&times;544 &middot; 124f (5.17&nbsp;s) &middot; 24&nbsp;fps &middot; seed 424242 &middot; identical prompt in every cell. Same seed does not mean same take &mdash; steps, sampler and LoRA all change the trajectory, so judge character rather than shot-for-shot identity.</p>
+<details><summary>prompt</summary><pre>integrated_multimodal_description:
+[Shot 1] A photorealistic overhead extreme close-up of a pair of weathered adult hands tying a fishing fly in a small steel vise, filling the frame against a dark green cutting mat, hard focused task lighting from the upper left, both hands fully visible with all ten fingers in frame. From 0.0 to 1.5 seconds the left thumb and forefinger pinch a wisp of red thread taut while the right hand makes three tight wraps around the hook shank. At the 1.8-second mark the right hand picks up fine-tipped scissors and makes a single clean snip at 2.3 seconds. From 2.6 to 4.0 seconds both hands work together whip-finishing the head of the fly, fingers crossing over one another. At 4.4 seconds the right index finger taps the finished fly once and it swings on the hook. No face, arms or body is ever visible; the hands never leave frame and never blur into one another.
+
+overall_soundscape:
+A quiet workroom, close-mic'd and intimate. Thread drawn taut with a fine squeak at 0.7 seconds. A single sharp metallic scissor snip at 2.3 seconds. Soft finger friction and thread whisper from 2.6 to 4.0 seconds. A tiny hook tap and a metallic ring at 4.4 seconds. A very low room tone underneath, no music, no voice.
+
+non_diegetic_music:
+N/A</pre></details>
+<div class="controls"><button onclick="document.querySelectorAll('video').forEach(v=>{v.currentTime=0;v.play()})">&#9654; Play all</button><button onclick="document.querySelectorAll('video').forEach(v=>v.pause())">&#10074;&#10074; Pause all</button><button onclick="document.querySelectorAll('video').forEach(v=>v.muted=!v.muted)">Mute/unmute all</button><a href="../ab.html?scene=hands-dexterity"><button>A/B slider &rarr;</button></a></div>
+<div class="grid"><div class="card ref">
+  <video src="../videos/r4/hands-dexterity--base20.mp4" poster="../posters/r4/hands-dexterity--base20.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>baseline · 20 steps</b>
+    <div class="note">No LoRA. The reference render.</div>
+    <div class="nums">166s &middot; floor -55.1 &middot; med -52.1 &middot;
+      peak -2.1 dB &middot; jitter 11.3 &middot; detail 106</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--emck8.mp4" poster="../posters/r4/hands-dexterity--emck8.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>ema-ckpt500 · 8 steps</b>
+    <div class="note">larryvrh/drbaph Turbo LoRA, EMA weights. Round-3 winner.</div>
+    <div class="nums">77s &middot; floor -58.3 &middot; med -54.1 &middot;
+      peak 0.9 dB &middot; jitter 15.5 &middot; detail 90</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--ck8.mp4" poster="../posters/r4/hands-dexterity--ck8.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>ckpt500 (non-EMA) · 8 steps</b>
+    <div class="note">Same checkpoint without EMA averaging. Dragged a noise bed in round 3 — re-tested here under the fixed audio path.</div>
+    <div class="nums">77s &middot; floor -53.0 &middot; med -45.4 &middot;
+      peak 3.0 dB &middot; jitter 12.9 &middot; detail 149</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx4-ref.mp4" poster="../posters/r4/hands-dexterity--lx4-ref.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 1.0</b>
+    <div class="note">ModelTC reference settings.</div>
+    <div class="nums">45s &middot; floor -63.1 &middot; med -56.5 &middot;
+      peak 2.7 dB &middot; jitter 15.5 &middot; detail 141</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx4-house.mp4" poster="../posters/r4/hands-dexterity--lx4-house.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 1.0 · shift 12/6</b>
+    <div class="note">Reference settings with our house audio shift.</div>
+    <div class="nums">45s &middot; floor -73.9 &middot; med -63.1 &middot;
+      peak 1.0 dB &middot; jitter 15.3 &middot; detail 139</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx4-ersde10.mp4" poster="../posters/r4/hands-dexterity--lx4-ersde10.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 1.0 · er_sde</b>
+    <div class="note">Isolates the sampler at full strength.</div>
+    <div class="nums">45s &middot; floor -63.6 &middot; med -59.6 &middot;
+      peak 2.3 dB &middot; jitter 13.9 &middot; detail 108</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx4-ref75.mp4" poster="../posters/r4/hands-dexterity--lx4-ref75.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 0.75</b>
+    <div class="note">Isolates strength on the reference sampler.</div>
+    <div class="nums">45s &middot; floor -62.8 &middot; med -56.2 &middot;
+      peak 3.1 dB &middot; jitter 14.7 &middot; detail 133</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx4-75house.mp4" poster="../posters/r4/hands-dexterity--lx4-75house.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 0.75 · shift 12/6</b>
+    <div class="note">Lower strength with the house shift.</div>
+    <div class="nums">45s &middot; floor -75.5 &middot; med -60.9 &middot;
+      peak 3.0 dB &middot; jitter 14.4 &middot; detail 130</div>
+  </div></div><div class="card pick">
+  <video src="../videos/r4/hands-dexterity--lx4-kijai.mp4" poster="../posters/r4/hands-dexterity--lx4-kijai.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 4 steps · str 0.75 · er_sde</b>
+    <div class="note">Kijai's recommended config. Pilot winner on jitter and luma.</div>
+    <div class="nums">45s &middot; floor -64.8 &middot; med -60.1 &middot;
+      peak 2.0 dB &middot; jitter 12.4 &middot; detail 96</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx8-ref.mp4" poster="../posters/r4/hands-dexterity--lx8-ref.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 8 steps · str 1.0</b>
+    <div class="note">Double the trained step count, reference settings.</div>
+    <div class="nums">77s &middot; floor -59.3 &middot; med -52.4 &middot;
+      peak 1.3 dB &middot; jitter 15.4 &middot; detail 118</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx8-house.mp4" poster="../posters/r4/hands-dexterity--lx8-house.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 8 steps · str 1.0 · shift 12/6</b>
+    <div class="note">Double steps with the house shift.</div>
+    <div class="nums">76s &middot; floor -66.4 &middot; med -55.8 &middot;
+      peak 2.2 dB &middot; jitter 15.3 &middot; detail 117</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/hands-dexterity--lx8-kijai.mp4" poster="../posters/r4/hands-dexterity--lx8-kijai.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>lightx2v · 8 steps · str 0.75 · er_sde</b>
+    <div class="note">Kijai's config given twice the steps.</div>
+    <div class="nums">77s &middot; floor -60.1 &middot; med -57.0 &middot;
+      peak 2.2 dB &middot; jitter 14.6 &middot; detail 102</div>
+  </div></div></div>
+<h2>Measured</h2><table><tr><th>config</th><th>time</th><th>floor</th><th>median</th><th>peak</th><th>jitter</th><th>detail</th><th>luma</th></tr><tr><td>baseline · 20 steps</td><td>166s</td><td>-55.1</td><td>-52.1</td><td>-2.1</td><td>11.3</td><td>106</td><td>96.0</td></tr><tr><td>ema-ckpt500 · 8 steps</td><td>77s</td><td>-58.3</td><td>-54.1</td><td>0.9</td><td>15.5</td><td>90</td><td>93.7</td></tr><tr><td>ckpt500 (non-EMA) · 8 steps</td><td>77s</td><td>-53.0</td><td>-45.4</td><td>3.0</td><td>12.9</td><td>149</td><td>86.9</td></tr><tr><td>lightx2v · 4 steps · str 1.0</td><td>45s</td><td>-63.1</td><td>-56.5</td><td>2.7</td><td>15.5</td><td>141</td><td>98.1</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · shift 12/6</td><td>45s</td><td>-73.9</td><td>-63.1</td><td>1.0</td><td>15.3</td><td>139</td><td>98.4</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · er_sde</td><td>45s</td><td>-63.6</td><td>-59.6</td><td>2.3</td><td>13.9</td><td>108</td><td>96.3</td></tr><tr><td>lightx2v · 4 steps · str 0.75</td><td>45s</td><td>-62.8</td><td>-56.2</td><td>3.1</td><td>14.7</td><td>133</td><td>96.0</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · shift 12/6</td><td>45s</td><td>-75.5</td><td>-60.9</td><td>3.0</td><td>14.4</td><td>130</td><td>95.8</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · er_sde</td><td>45s</td><td>-64.8</td><td>-60.1</td><td>2.0</td><td>12.4</td><td>96</td><td>96.0</td></tr><tr><td>lightx2v · 8 steps · str 1.0</td><td>77s</td><td>-59.3</td><td>-52.4</td><td>1.3</td><td>15.4</td><td>118</td><td>94.5</td></tr><tr><td>lightx2v · 8 steps · str 1.0 · shift 12/6</td><td>76s</td><td>-66.4</td><td>-55.8</td><td>2.2</td><td>15.3</td><td>117</td><td>95.1</td></tr><tr><td>lightx2v · 8 steps · str 0.75 · er_sde</td><td>77s</td><td>-60.1</td><td>-57.0</td><td>2.2</td><td>14.6</td><td>102</td><td>100.8</td></tr></table><footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
+Turbo LoRAs by <a href="https://huggingface.co/larryvrh">larryvrh</a> /
+<a href="https://huggingface.co/drbaph">drbaph</a> and
+<a href="https://huggingface.co/lightx2v/Minimax-h3-Turbo">lightx2v</a>
+(<a href="https://huggingface.co/Kijai/MiniMax-H3_comfy">Kijai's ComfyUI conversion</a>) &middot;
+rendered locally on an RTX&nbsp;5080 (16&nbsp;GB) with vanilla ComfyUI nodes.</footer>
+</body></html>
