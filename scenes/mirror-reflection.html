@@ -36,8 +36,10 @@
   th, td { border: 1px solid #2a313a; padding: 4px 10px; text-align: right; }
   th:first-child, td:first-child { text-align: left; }
   th { background: #1a1f26; color: #b7c1cc; }
-  footer { color: #6f7a85; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
-           padding-top: 12px; }
+  footer { color: #6f7a85; margin-top: 12px; font-size: 12.5px; }
+  .env { color: #9aa4af; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
+         padding-top: 12px; }
+  .env .envnote { color: #6f7a85; }
   ul.toc { list-style: none; padding: 0; display: grid;
            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
   ul.toc li { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px;
@@ -65,75 +67,88 @@ N/A</pre></details>
   <div class="meta"><b>baseline · 20 steps</b>
     <div class="note">No LoRA. The reference render.</div>
     <div class="nums">166s &middot; floor -35.6 &middot; med -27.4 &middot;
-      peak 2.4 dB &middot; jitter 8.9 &middot; detail 176</div>
+      peak 2.4 dB &middot; jitter 189.5 &middot; detail 0.074</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--emck8.mp4" poster="../posters/r4/mirror-reflection--emck8.jpg" controls preload="none" loop></video>
   <div class="meta"><b>ema-ckpt500 · 8 steps</b>
     <div class="note">larryvrh/drbaph Turbo LoRA, EMA weights. Round-3 winner.</div>
     <div class="nums">77s &middot; floor -43.5 &middot; med -29.0 &middot;
-      peak 2.5 dB &middot; jitter 6.8 &middot; detail 204</div>
+      peak 2.5 dB &middot; jitter 139.6 &middot; detail 0.080</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--ck8.mp4" poster="../posters/r4/mirror-reflection--ck8.jpg" controls preload="none" loop></video>
   <div class="meta"><b>ckpt500 (non-EMA) · 8 steps</b>
     <div class="note">Same checkpoint without EMA averaging. Dragged a noise bed in round 3 — re-tested here under the fixed audio path.</div>
     <div class="nums">77s &middot; floor -39.0 &middot; med -29.7 &middot;
-      peak 2.5 dB &middot; jitter 9.0 &middot; detail 315</div>
+      peak 2.5 dB &middot; jitter 180.6 &middot; detail 0.117</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx4-ref.mp4" poster="../posters/r4/mirror-reflection--lx4-ref.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0</b>
     <div class="note">ModelTC reference settings.</div>
     <div class="nums">46s &middot; floor -34.8 &middot; med -26.9 &middot;
-      peak 2.5 dB &middot; jitter 16.5 &middot; detail 696</div>
+      peak 2.5 dB &middot; jitter 287.9 &middot; detail 0.216</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx4-house.mp4" poster="../posters/r4/mirror-reflection--lx4-house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0 · shift 12/6</b>
     <div class="note">Reference settings with our house audio shift.</div>
     <div class="nums">45s &middot; floor -34.5 &middot; med -25.4 &middot;
-      peak 3.2 dB &middot; jitter 16.7 &middot; detail 677</div>
+      peak 3.2 dB &middot; jitter 283.3 &middot; detail 0.199</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx4-ersde10.mp4" poster="../posters/r4/mirror-reflection--lx4-ersde10.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0 · er_sde</b>
     <div class="note">Isolates the sampler at full strength.</div>
     <div class="nums">45s &middot; floor -42.0 &middot; med -32.5 &middot;
-      peak -5.3 dB &middot; jitter 14.4 &middot; detail 272</div>
+      peak -5.3 dB &middot; jitter 261.7 &middot; detail 0.090</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx4-ref75.mp4" poster="../posters/r4/mirror-reflection--lx4-ref75.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75</b>
     <div class="note">Isolates strength on the reference sampler.</div>
     <div class="nums">45s &middot; floor -40.7 &middot; med -23.1 &middot;
-      peak 2.6 dB &middot; jitter 14.4 &middot; detail 426</div>
+      peak 2.6 dB &middot; jitter 261.9 &middot; detail 0.142</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx4-75house.mp4" poster="../posters/r4/mirror-reflection--lx4-75house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75 · shift 12/6</b>
     <div class="note">Lower strength with the house shift.</div>
     <div class="nums">45s &middot; floor -42.2 &middot; med -26.9 &middot;
-      peak 4.0 dB &middot; jitter 14.1 &middot; detail 404</div>
+      peak 4.0 dB &middot; jitter 256.3 &middot; detail 0.135</div>
   </div></div><div class="card pick">
   <video src="../videos/r4/mirror-reflection--lx4-kijai.mp4" poster="../posters/r4/mirror-reflection--lx4-kijai.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75 · er_sde</b>
     <div class="note">Kijai's recommended config. Pilot winner on jitter and luma.</div>
     <div class="nums">45s &middot; floor -40.6 &middot; med -32.7 &middot;
-      peak -2.6 dB &middot; jitter 10.7 &middot; detail 150</div>
+      peak -2.6 dB &middot; jitter 188.8 &middot; detail 0.046</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx8-ref.mp4" poster="../posters/r4/mirror-reflection--lx8-ref.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 1.0</b>
     <div class="note">Double the trained step count, reference settings.</div>
     <div class="nums">77s &middot; floor -34.9 &middot; med -28.1 &middot;
-      peak 0.2 dB &middot; jitter 17.7 &middot; detail 364</div>
+      peak 0.2 dB &middot; jitter 297.8 &middot; detail 0.103</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx8-house.mp4" poster="../posters/r4/mirror-reflection--lx8-house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 1.0 · shift 12/6</b>
     <div class="note">Double steps with the house shift.</div>
     <div class="nums">76s &middot; floor -39.5 &middot; med -29.8 &middot;
-      peak -0.8 dB &middot; jitter 17.7 &middot; detail 349</div>
+      peak -0.8 dB &middot; jitter 295.8 &middot; detail 0.097</div>
   </div></div><div class="card ">
   <video src="../videos/r4/mirror-reflection--lx8-kijai.mp4" poster="../posters/r4/mirror-reflection--lx8-kijai.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 0.75 · er_sde</b>
     <div class="note">Kijai's config given twice the steps.</div>
     <div class="nums">77s &middot; floor -39.6 &middot; med -30.6 &middot;
-      peak -1.8 dB &middot; jitter 13.9 &middot; detail 208</div>
+      peak -1.8 dB &middot; jitter 232.9 &middot; detail 0.059</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/mirror-reflection--base20-spec.mp4" poster="../posters/r4/mirror-reflection--base20-spec.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>baseline · 20 steps + Spectrum</b>
+    <div class="note">No LoRA, plus SpectrumApplyMiniMaxH3 (v0.1.9 defaults: degree 1, warmup 1, one-point bootstrap) skipping DiT evaluations.</div>
+    <div class="nums">108s &middot; floor -30.4 &middot; med -26.9 &middot;
+      peak -0.9 dB &middot; jitter 111.5 &middot; detail 0.034</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/mirror-reflection--emck8-spec.mp4" poster="../posters/r4/mirror-reflection--emck8-spec.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>ema-ckpt500 · 8 steps + Spectrum</b>
+    <div class="note">Turbo LoRA and Spectrum stacked. Only possible since Spectrum v0.1.9 — the old warmup_steps=5 default left no forecastable window at 8 steps.</div>
+    <div class="nums">61s &middot; floor -33.0 &middot; med -27.0 &middot;
+      peak 1.3 dB &middot; jitter 111.2 &middot; detail 0.032</div>
   </div></div></div>
-<h2>Measured</h2><table><tr><th>config</th><th>time</th><th>floor</th><th>median</th><th>peak</th><th>jitter</th><th>detail</th><th>luma</th></tr><tr><td>baseline · 20 steps</td><td>166s</td><td>-35.6</td><td>-27.4</td><td>2.4</td><td>8.9</td><td>176</td><td>81.4</td></tr><tr><td>ema-ckpt500 · 8 steps</td><td>77s</td><td>-43.5</td><td>-29.0</td><td>2.5</td><td>6.8</td><td>204</td><td>85.2</td></tr><tr><td>ckpt500 (non-EMA) · 8 steps</td><td>77s</td><td>-39.0</td><td>-29.7</td><td>2.5</td><td>9.0</td><td>315</td><td>82.3</td></tr><tr><td>lightx2v · 4 steps · str 1.0</td><td>46s</td><td>-34.8</td><td>-26.9</td><td>2.5</td><td>16.5</td><td>696</td><td>98.8</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · shift 12/6</td><td>45s</td><td>-34.5</td><td>-25.4</td><td>3.2</td><td>16.7</td><td>677</td><td>101.6</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · er_sde</td><td>45s</td><td>-42.0</td><td>-32.5</td><td>-5.3</td><td>14.4</td><td>272</td><td>100.8</td></tr><tr><td>lightx2v · 4 steps · str 0.75</td><td>45s</td><td>-40.7</td><td>-23.1</td><td>2.6</td><td>14.4</td><td>426</td><td>93.3</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · shift 12/6</td><td>45s</td><td>-42.2</td><td>-26.9</td><td>4.0</td><td>14.1</td><td>404</td><td>92.3</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · er_sde</td><td>45s</td><td>-40.6</td><td>-32.7</td><td>-2.6</td><td>10.7</td><td>150</td><td>96.7</td></tr><tr><td>lightx2v · 8 steps · str 1.0</td><td>77s</td><td>-34.9</td><td>-28.1</td><td>0.2</td><td>17.7</td><td>364</td><td>98.2</td></tr><tr><td>lightx2v · 8 steps · str 1.0 · shift 12/6</td><td>76s</td><td>-39.5</td><td>-29.8</td><td>-0.8</td><td>17.7</td><td>349</td><td>99.1</td></tr><tr><td>lightx2v · 8 steps · str 0.75 · er_sde</td><td>77s</td><td>-39.6</td><td>-30.6</td><td>-1.8</td><td>13.9</td><td>208</td><td>104.8</td></tr></table><footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
+<h2>Measured</h2><table><tr><th>config</th><th>time</th><th>floor</th><th>median</th><th>peak</th><th>jitter</th><th>detail</th><th>raw detail</th><th>luma</th></tr><tr><td>baseline · 20 steps</td><td>166s</td><td>-35.6</td><td>-27.4</td><td>2.4</td><td>189.5</td><td>0.074</td><td>176</td><td>81.4</td></tr><tr><td>ema-ckpt500 · 8 steps</td><td>77s</td><td>-43.5</td><td>-29.0</td><td>2.5</td><td>139.6</td><td>0.080</td><td>204</td><td>85.2</td></tr><tr><td>ckpt500 (non-EMA) · 8 steps</td><td>77s</td><td>-39.0</td><td>-29.7</td><td>2.5</td><td>180.6</td><td>0.117</td><td>315</td><td>82.3</td></tr><tr><td>lightx2v · 4 steps · str 1.0</td><td>46s</td><td>-34.8</td><td>-26.9</td><td>2.5</td><td>287.9</td><td>0.216</td><td>696</td><td>98.8</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · shift 12/6</td><td>45s</td><td>-34.5</td><td>-25.4</td><td>3.2</td><td>283.3</td><td>0.199</td><td>677</td><td>101.6</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · er_sde</td><td>45s</td><td>-42.0</td><td>-32.5</td><td>-5.3</td><td>261.7</td><td>0.090</td><td>272</td><td>100.8</td></tr><tr><td>lightx2v · 4 steps · str 0.75</td><td>45s</td><td>-40.7</td><td>-23.1</td><td>2.6</td><td>261.9</td><td>0.142</td><td>426</td><td>93.3</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · shift 12/6</td><td>45s</td><td>-42.2</td><td>-26.9</td><td>4.0</td><td>256.3</td><td>0.135</td><td>404</td><td>92.3</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · er_sde</td><td>45s</td><td>-40.6</td><td>-32.7</td><td>-2.6</td><td>188.8</td><td>0.046</td><td>150</td><td>96.7</td></tr><tr><td>lightx2v · 8 steps · str 1.0</td><td>77s</td><td>-34.9</td><td>-28.1</td><td>0.2</td><td>297.8</td><td>0.103</td><td>364</td><td>98.2</td></tr><tr><td>lightx2v · 8 steps · str 1.0 · shift 12/6</td><td>76s</td><td>-39.5</td><td>-29.8</td><td>-0.8</td><td>295.8</td><td>0.097</td><td>349</td><td>99.1</td></tr><tr><td>lightx2v · 8 steps · str 0.75 · er_sde</td><td>77s</td><td>-39.6</td><td>-30.6</td><td>-1.8</td><td>232.9</td><td>0.059</td><td>208</td><td>104.8</td></tr><tr><td>baseline · 20 steps + Spectrum</td><td>108s</td><td>-30.4</td><td>-26.9</td><td>-0.9</td><td>111.5</td><td>0.034</td><td>94</td><td>83.6</td></tr><tr><td>ema-ckpt500 · 8 steps + Spectrum</td><td>61s</td><td>-33.0</td><td>-27.0</td><td>1.3</td><td>111.2</td><td>0.032</td><td>62</td><td>77.3</td></tr></table><div class="env">Rendered on ComfyUI <b>0.30.0</b> at commit <a href="https://github.com/comfyanonymous/ComfyUI/commit/344b43989e8c56b5bb4a66cf028c834192ab59dd"><code>344b4398</code></a> (2026-08-07, "Support asym w4a8_int (#15308)") &middot; torch 2.12.1+cu130 &middot; NVIDIA GeForce RTX 5080, 15.4 GB<br>Custom nodes: ComfyUI-Spectrum-MiniMax-H3 <code>1a06e20 (v0.1.9) — used by the two Spectrum columns only</code> &middot; comfyui-kjnodes <code>1.4.9</code> &middot; ComfyUI-sol-attn <code>251c27f</code><br><span class="envnote">All 14 columns rendered on this single ComfyUI commit. It postdates bdcb886a (MiniMax audio-sampler rework, merged 2026-08-06), which is why round-3 clips are archived separately rather than mixed in.</span></div>
+<footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
 Turbo LoRAs by <a href="https://huggingface.co/larryvrh">larryvrh</a> /
 <a href="https://huggingface.co/drbaph">drbaph</a> and
 <a href="https://huggingface.co/lightx2v/Minimax-h3-Turbo">lightx2v</a>

@@ -36,8 +36,10 @@
   th, td { border: 1px solid #2a313a; padding: 4px 10px; text-align: right; }
   th:first-child, td:first-child { text-align: left; }
   th { background: #1a1f26; color: #b7c1cc; }
-  footer { color: #6f7a85; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
-           padding-top: 12px; }
+  footer { color: #6f7a85; margin-top: 12px; font-size: 12.5px; }
+  .env { color: #9aa4af; margin-top: 34px; font-size: 12.5px; border-top: 1px solid #2a313a;
+         padding-top: 12px; }
+  .env .envnote { color: #6f7a85; }
   ul.toc { list-style: none; padding: 0; display: grid;
            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
   ul.toc li { background: #1a1f26; border: 1px solid #2a313a; border-radius: 10px;
@@ -65,75 +67,88 @@ N/A</pre></details>
   <div class="meta"><b>baseline · 20 steps</b>
     <div class="note">No LoRA. The reference render.</div>
     <div class="nums">166s &middot; floor -39.8 &middot; med -24.5 &middot;
-      peak -4.5 dB &middot; jitter 9.0 &middot; detail 467</div>
+      peak -4.5 dB &middot; jitter 169.5 &middot; detail 0.158</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--emck8.mp4" poster="../posters/r4/overlap-talk--emck8.jpg" controls preload="none" loop></video>
   <div class="meta"><b>ema-ckpt500 · 8 steps</b>
     <div class="note">larryvrh/drbaph Turbo LoRA, EMA weights. Round-3 winner.</div>
     <div class="nums">77s &middot; floor -46.7 &middot; med -25.3 &middot;
-      peak -3.9 dB &middot; jitter 8.5 &middot; detail 443</div>
+      peak -3.9 dB &middot; jitter 163.3 &middot; detail 0.161</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--ck8.mp4" poster="../posters/r4/overlap-talk--ck8.jpg" controls preload="none" loop></video>
   <div class="meta"><b>ckpt500 (non-EMA) · 8 steps</b>
     <div class="note">Same checkpoint without EMA averaging. Dragged a noise bed in round 3 — re-tested here under the fixed audio path.</div>
     <div class="nums">77s &middot; floor -38.0 &middot; med -23.5 &middot;
-      peak -4.1 dB &middot; jitter 12.6 &middot; detail 733</div>
+      peak -4.1 dB &middot; jitter 252.0 &middot; detail 0.286</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx4-ref.mp4" poster="../posters/r4/overlap-talk--lx4-ref.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0</b>
     <div class="note">ModelTC reference settings.</div>
     <div class="nums">45s &middot; floor -29.9 &middot; med -14.0 &middot;
-      peak 2.1 dB &middot; jitter 18.3 &middot; detail 696</div>
+      peak 2.1 dB &middot; jitter 281.7 &middot; detail 0.161</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx4-house.mp4" poster="../posters/r4/overlap-talk--lx4-house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0 · shift 12/6</b>
     <div class="note">Reference settings with our house audio shift.</div>
     <div class="nums">45s &middot; floor -36.7 &middot; med -20.1 &middot;
-      peak 1.2 dB &middot; jitter 17.9 &middot; detail 663</div>
+      peak 1.2 dB &middot; jitter 275.7 &middot; detail 0.154</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx4-ersde10.mp4" poster="../posters/r4/overlap-talk--lx4-ersde10.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 1.0 · er_sde</b>
     <div class="note">Isolates the sampler at full strength.</div>
     <div class="nums">45s &middot; floor -36.4 &middot; med -20.8 &middot;
-      peak -0.8 dB &middot; jitter 15.0 &middot; detail 365</div>
+      peak -0.8 dB &middot; jitter 250.7 &middot; detail 0.099</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx4-ref75.mp4" poster="../posters/r4/overlap-talk--lx4-ref75.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75</b>
     <div class="note">Isolates strength on the reference sampler.</div>
     <div class="nums">45s &middot; floor -30.4 &middot; med -15.2 &middot;
-      peak 2.4 dB &middot; jitter 15.0 &middot; detail 579</div>
+      peak 2.4 dB &middot; jitter 239.9 &middot; detail 0.144</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx4-75house.mp4" poster="../posters/r4/overlap-talk--lx4-75house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75 · shift 12/6</b>
     <div class="note">Lower strength with the house shift.</div>
     <div class="nums">45s &middot; floor -35.8 &middot; med -22.6 &middot;
-      peak 1.6 dB &middot; jitter 14.8 &middot; detail 552</div>
+      peak 1.6 dB &middot; jitter 235.9 &middot; detail 0.137</div>
   </div></div><div class="card pick">
   <video src="../videos/r4/overlap-talk--lx4-kijai.mp4" poster="../posters/r4/overlap-talk--lx4-kijai.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 4 steps · str 0.75 · er_sde</b>
     <div class="note">Kijai's recommended config. Pilot winner on jitter and luma.</div>
     <div class="nums">45s &middot; floor -38.7 &middot; med -23.6 &middot;
-      peak -4.2 dB &middot; jitter 12.7 &middot; detail 343</div>
+      peak -4.2 dB &middot; jitter 222.6 &middot; detail 0.104</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx8-ref.mp4" poster="../posters/r4/overlap-talk--lx8-ref.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 1.0</b>
     <div class="note">Double the trained step count, reference settings.</div>
     <div class="nums">77s &middot; floor -38.8 &middot; med -23.9 &middot;
-      peak -3.9 dB &middot; jitter 18.6 &middot; detail 422</div>
+      peak -3.9 dB &middot; jitter 320.1 &middot; detail 0.122</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx8-house.mp4" poster="../posters/r4/overlap-talk--lx8-house.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 1.0 · shift 12/6</b>
     <div class="note">Double steps with the house shift.</div>
     <div class="nums">77s &middot; floor -39.2 &middot; med -23.9 &middot;
-      peak -5.8 dB &middot; jitter 18.7 &middot; detail 433</div>
+      peak -5.8 dB &middot; jitter 318.7 &middot; detail 0.123</div>
   </div></div><div class="card ">
   <video src="../videos/r4/overlap-talk--lx8-kijai.mp4" poster="../posters/r4/overlap-talk--lx8-kijai.jpg" controls preload="none" loop></video>
   <div class="meta"><b>lightx2v · 8 steps · str 0.75 · er_sde</b>
     <div class="note">Kijai's config given twice the steps.</div>
     <div class="nums">77s &middot; floor -36.7 &middot; med -23.5 &middot;
-      peak -6.6 dB &middot; jitter 15.6 &middot; detail 420</div>
+      peak -6.6 dB &middot; jitter 259.7 &middot; detail 0.113</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/overlap-talk--base20-spec.mp4" poster="../posters/r4/overlap-talk--base20-spec.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>baseline · 20 steps + Spectrum</b>
+    <div class="note">No LoRA, plus SpectrumApplyMiniMaxH3 (v0.1.9 defaults: degree 1, warmup 1, one-point bootstrap) skipping DiT evaluations.</div>
+    <div class="nums">108s &middot; floor -42.1 &middot; med -28.4 &middot;
+      peak -7.2 dB &middot; jitter 162.5 &middot; detail 0.168</div>
+  </div></div><div class="card ">
+  <video src="../videos/r4/overlap-talk--emck8-spec.mp4" poster="../posters/r4/overlap-talk--emck8-spec.jpg" controls preload="none" loop></video>
+  <div class="meta"><b>ema-ckpt500 · 8 steps + Spectrum</b>
+    <div class="note">Turbo LoRA and Spectrum stacked. Only possible since Spectrum v0.1.9 — the old warmup_steps=5 default left no forecastable window at 8 steps.</div>
+    <div class="nums">61s &middot; floor -40.8 &middot; med -28.3 &middot;
+      peak -10.2 dB &middot; jitter 100.4 &middot; detail 0.236</div>
   </div></div></div>
-<h2>Measured</h2><table><tr><th>config</th><th>time</th><th>floor</th><th>median</th><th>peak</th><th>jitter</th><th>detail</th><th>luma</th></tr><tr><td>baseline · 20 steps</td><td>166s</td><td>-39.8</td><td>-24.5</td><td>-4.5</td><td>9.0</td><td>467</td><td>76.2</td></tr><tr><td>ema-ckpt500 · 8 steps</td><td>77s</td><td>-46.7</td><td>-25.3</td><td>-3.9</td><td>8.5</td><td>443</td><td>72.8</td></tr><tr><td>ckpt500 (non-EMA) · 8 steps</td><td>77s</td><td>-38.0</td><td>-23.5</td><td>-4.1</td><td>12.6</td><td>733</td><td>72.5</td></tr><tr><td>lightx2v · 4 steps · str 1.0</td><td>45s</td><td>-29.9</td><td>-14.0</td><td>2.1</td><td>18.3</td><td>696</td><td>86.7</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · shift 12/6</td><td>45s</td><td>-36.7</td><td>-20.1</td><td>1.2</td><td>17.9</td><td>663</td><td>86.2</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · er_sde</td><td>45s</td><td>-36.4</td><td>-20.8</td><td>-0.8</td><td>15.0</td><td>365</td><td>79.2</td></tr><tr><td>lightx2v · 4 steps · str 0.75</td><td>45s</td><td>-30.4</td><td>-15.2</td><td>2.4</td><td>15.0</td><td>579</td><td>82.0</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · shift 12/6</td><td>45s</td><td>-35.8</td><td>-22.6</td><td>1.6</td><td>14.8</td><td>552</td><td>82.7</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · er_sde</td><td>45s</td><td>-38.7</td><td>-23.6</td><td>-4.2</td><td>12.7</td><td>343</td><td>76.8</td></tr><tr><td>lightx2v · 8 steps · str 1.0</td><td>77s</td><td>-38.8</td><td>-23.9</td><td>-3.9</td><td>18.6</td><td>422</td><td>81.0</td></tr><tr><td>lightx2v · 8 steps · str 1.0 · shift 12/6</td><td>77s</td><td>-39.2</td><td>-23.9</td><td>-5.8</td><td>18.7</td><td>433</td><td>81.1</td></tr><tr><td>lightx2v · 8 steps · str 0.75 · er_sde</td><td>77s</td><td>-36.7</td><td>-23.5</td><td>-6.6</td><td>15.6</td><td>420</td><td>83.0</td></tr></table><footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
+<h2>Measured</h2><table><tr><th>config</th><th>time</th><th>floor</th><th>median</th><th>peak</th><th>jitter</th><th>detail</th><th>raw detail</th><th>luma</th></tr><tr><td>baseline · 20 steps</td><td>166s</td><td>-39.8</td><td>-24.5</td><td>-4.5</td><td>169.5</td><td>0.158</td><td>467</td><td>76.2</td></tr><tr><td>ema-ckpt500 · 8 steps</td><td>77s</td><td>-46.7</td><td>-25.3</td><td>-3.9</td><td>163.3</td><td>0.161</td><td>443</td><td>72.8</td></tr><tr><td>ckpt500 (non-EMA) · 8 steps</td><td>77s</td><td>-38.0</td><td>-23.5</td><td>-4.1</td><td>252.0</td><td>0.286</td><td>733</td><td>72.5</td></tr><tr><td>lightx2v · 4 steps · str 1.0</td><td>45s</td><td>-29.9</td><td>-14.0</td><td>2.1</td><td>281.7</td><td>0.161</td><td>696</td><td>86.7</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · shift 12/6</td><td>45s</td><td>-36.7</td><td>-20.1</td><td>1.2</td><td>275.7</td><td>0.154</td><td>663</td><td>86.2</td></tr><tr><td>lightx2v · 4 steps · str 1.0 · er_sde</td><td>45s</td><td>-36.4</td><td>-20.8</td><td>-0.8</td><td>250.7</td><td>0.099</td><td>365</td><td>79.2</td></tr><tr><td>lightx2v · 4 steps · str 0.75</td><td>45s</td><td>-30.4</td><td>-15.2</td><td>2.4</td><td>239.9</td><td>0.144</td><td>579</td><td>82.0</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · shift 12/6</td><td>45s</td><td>-35.8</td><td>-22.6</td><td>1.6</td><td>235.9</td><td>0.137</td><td>552</td><td>82.7</td></tr><tr><td>lightx2v · 4 steps · str 0.75 · er_sde</td><td>45s</td><td>-38.7</td><td>-23.6</td><td>-4.2</td><td>222.6</td><td>0.104</td><td>343</td><td>76.8</td></tr><tr><td>lightx2v · 8 steps · str 1.0</td><td>77s</td><td>-38.8</td><td>-23.9</td><td>-3.9</td><td>320.1</td><td>0.122</td><td>422</td><td>81.0</td></tr><tr><td>lightx2v · 8 steps · str 1.0 · shift 12/6</td><td>77s</td><td>-39.2</td><td>-23.9</td><td>-5.8</td><td>318.7</td><td>0.123</td><td>433</td><td>81.1</td></tr><tr><td>lightx2v · 8 steps · str 0.75 · er_sde</td><td>77s</td><td>-36.7</td><td>-23.5</td><td>-6.6</td><td>259.7</td><td>0.113</td><td>420</td><td>83.0</td></tr><tr><td>baseline · 20 steps + Spectrum</td><td>108s</td><td>-42.1</td><td>-28.4</td><td>-7.2</td><td>162.5</td><td>0.168</td><td>356</td><td>59.5</td></tr><tr><td>ema-ckpt500 · 8 steps + Spectrum</td><td>61s</td><td>-40.8</td><td>-28.3</td><td>-10.2</td><td>100.4</td><td>0.236</td><td>574</td><td>61.6</td></tr></table><div class="env">Rendered on ComfyUI <b>0.30.0</b> at commit <a href="https://github.com/comfyanonymous/ComfyUI/commit/344b43989e8c56b5bb4a66cf028c834192ab59dd"><code>344b4398</code></a> (2026-08-07, "Support asym w4a8_int (#15308)") &middot; torch 2.12.1+cu130 &middot; NVIDIA GeForce RTX 5080, 15.4 GB<br>Custom nodes: ComfyUI-Spectrum-MiniMax-H3 <code>1a06e20 (v0.1.9) — used by the two Spectrum columns only</code> &middot; comfyui-kjnodes <code>1.4.9</code> &middot; ComfyUI-sol-attn <code>251c27f</code><br><span class="envnote">All 14 columns rendered on this single ComfyUI commit. It postdates bdcb886a (MiniMax audio-sampler rework, merged 2026-08-06), which is why round-3 clips are archived separately rather than mixed in.</span></div>
+<footer>MiniMax&nbsp;H3 (Comfy-Org pruned int8) &middot;
 Turbo LoRAs by <a href="https://huggingface.co/larryvrh">larryvrh</a> /
 <a href="https://huggingface.co/drbaph">drbaph</a> and
 <a href="https://huggingface.co/lightx2v/Minimax-h3-Turbo">lightx2v</a>
